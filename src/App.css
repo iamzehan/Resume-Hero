@@ -1,7 +1,35 @@
+@import 'tailwindcss';
 #root{
   @apply w-screen h-screen;
 }
-
+form{
+  @apply w-screen xl:max-w-1/2;
+  @apply flex flex-col bg-white dark:bg-transparent text-black dark:text-white gap-2;
+  @apply p-10;
+  @apply text-balance;
+  fieldset{
+    @apply md:border md:border-gray-300 md:p-5 rounded
+  }
+  fieldset:focus-within{
+    @apply md:border-blue-500/20 md:shadow-lg/20 md:shadow-blue-500;
+    legend{
+      @apply text-blue-500;
+    }
+  }
+  
+  legend{
+    @apply font-bold text-lg text-shadow-lg
+  }
+  label{
+    @apply font-medium;
+  }
+  input:not([type="submit"]){
+    @apply border border-gray-500/60 rounded py-2 px-4;
+  }
+  input:focus{
+    @apply outline-0 border-blue-500 shadow-sm;
+  }
+}
 
 @keyframes logo-spin {
   from {
