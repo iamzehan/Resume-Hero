@@ -27,7 +27,6 @@ export default function Jobs({
     // Setting the data after delete
     data.deleteJob(id);
     setData(data);
-    console.log(JSON.stringify(data, null, 4));
   };
 
   return (
@@ -138,13 +137,11 @@ function Job({ id, index, data, onDelete, setData }: JobProps) {
     if (!exists) {
       data.addJob(parsedData);
       setData(data);
-      console.log(JSON.stringify(data, null, 4));
     }
     // update if exists
     else if (exists) {
       data.updateJob(parsedData);
       setData(data);
-      console.log(JSON.stringify(data, null, 4));
     }
   }
   return (
