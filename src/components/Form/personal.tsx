@@ -1,6 +1,6 @@
-import { type Data } from "../../lib/utils";
+import { Data } from "../../lib/utils";
 
-export default function Personal({data, onSet}:{data:Data, onSet:(data:Data)=>void}) {
+export default function Personal({data, setData}:{data:Data, setData:(data:Data)=>void}) {
   return (
     <form>
       <fieldset className="flex flex-col">
