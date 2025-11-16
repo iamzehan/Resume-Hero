@@ -63,7 +63,13 @@ export class Data implements DataItem {
     this.educations = [];
     this.jobs = [];
   }
-
+  
+  // Personal Info Methods 
+  public setPersonalInfo(name:string, phone:string, email:string):void{
+    this.name = name;
+    this.phone = phone;
+    this.email = email;
+  }
   // Educations Methods
   public addEducation(education:EducationItem){
     this.educations.push(education);

@@ -1,16 +1,47 @@
 import { Data } from "../../lib/utils";
+import { Add } from "@mui/icons-material";
+import { useRef } from "react";
+export default function Personal({
+  data,
+  setData,
+}: {
+  data: Data;
+  setData: (data: Data) => void;
+}) {
+  const formRef = useRef<HTMLFormElement>(null);
+  function handleSubmit(e:React.FormEvent<HTMLFormElement>){
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const rawData = Object.fromEntries(formData.entries());
+    data.setPersonalInfo(
+      rawData.name as string,
+      rawData.phone as string,
+      rawData.email as string
+    )
+    setData(data);
+    console.log(JSON.stringify(data, null, 2));
+  }
 
-export default function Personal({data, setData}:{data:Data, setData:(data:Data)=>void}) {
   return (
-    <form>
-      <fieldset className="flex flex-col">
-        <legend>Personal Information</legend>
+    <form className="xl:items-center!" ref={formRef} onSubmit={handleSubmit}>
+      <fieldset className="flex flex-col xl:w-[90%]!">
+        <legend className="text-center font-semibold! text-3xl! mb-5">
+          Personal Information
+        </legend>
         <label htmlFor="name">Full name </label>
         <input type="text" name="name" placeholder="Full name"></input>
         <label htmlFor="phone">Phone number </label>
         <input type="text" name="phone" placeholder="Phone number"></input>
         <label htmlFor="email">Email </label>
         <input type="email" name="email" placeholder="you@example.com"></input>
+        <div className="self-end md:self-center py-10">
+          <button 
+          onClick={()=>formRef.current?.requestSubmit()}
+          className="btn-primary p-3 rounded-full md:rounded flex items-center gap-2">
+            <span className="hidden md:block text-xl">Add</span>
+            <Add fontSize="medium"/>
+          </button>
+        </div>
       </fieldset>
     </form>
   );
