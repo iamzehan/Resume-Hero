@@ -64,6 +64,7 @@ export class Data implements DataItem {
     this.jobs = [];
   }
 
+  // Educations Methods
   public addEducation(education:EducationItem){
     this.educations.push(education);
   }
@@ -76,6 +77,8 @@ export class Data implements DataItem {
   public deleteEducation(id:string): void{
     this.educations = this.educations.filter((item)=> item.id!==id)
   }
+
+  // Jobs methods
   public addJob(job:JobItem){
     this.jobs.push(job);
   }
@@ -86,6 +89,6 @@ export class Data implements DataItem {
   }
 
   public deleteJob(id:string):void{
-    this.jobs = this.jobs.filter((item)=> item.id === id);
+    this.jobs = this.jobs.filter((item)=> item.id !== id);
   }
 }
