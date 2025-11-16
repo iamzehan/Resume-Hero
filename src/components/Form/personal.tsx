@@ -28,11 +28,11 @@ export default function Personal({
           Personal Information
         </legend>
         <label htmlFor="name">Full name </label>
-        <input type="text" name="name" placeholder="Full name"></input>
+        <input type="text" name="name" placeholder="Full name" required></input>
         <label htmlFor="phone">Phone number </label>
-        <input type="text" name="phone" placeholder="Phone number"></input>
+        <input type="text" name="phone" placeholder="Phone number" required></input>
         <label htmlFor="email">Email </label>
-        <input type="email" name="email" placeholder="you@example.com"></input>
+        <input type="email" name="email" placeholder="you@example.com" required></input>
         <div className="self-end md:self-center py-10">
           <button 
           onClick={()=>formRef.current?.requestSubmit()}
