@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import clsx from "clsx";
-import { Add as AddIcon, Delete } from "@mui/icons-material";
-import { type Data, type Education as Edu } from "../../lib/utils";
+import { Add as AddIcon, Save, Delete } from "@mui/icons-material";
+import { Data, Education as Edu } from "../../lib/utils";
 function getID() {
   return self.crypto.randomUUID();
 }
@@ -21,8 +21,12 @@ export default function Educations({
   };
 
   const handleDelete = (id: string) => {
+    // Setting the view after delete
     setItems((prev) => prev.filter((item) => item !== id));
-    setData({...data, education: data.education.filter((item)=> item.id!==id)});
+    // Setting the data after delete
+    data.deleteEducation(id)
+    console.log(data);
+    setData(data);
   };
   return (
     <>
@@ -114,38 +118,43 @@ interface EducationProps {
 
 function Education({ id, index, data, onDelete, setData }: EducationProps) {
   const formRef = useRef<HTMLFormElement>(null);
+
+  // handling form submit
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const rawData = Object.fromEntries(formData?.entries());
-    const parsedData: Edu = {
-      id: rawData.id as string,
-      institute: rawData.institute as string,
-      degree: rawData.degree as string,
-      year: rawData.year as string,
-    };
+    const parsedData = new Edu(rawData._id as string, 
+      rawData.institute as string, 
+      rawData.degree as string, 
+      rawData.year as string);
     
-    const exists = data.education.find(val => val.id===parsedData.id);
+    const exists = data.educations.find(val => val.id===parsedData.id);
+    // add new education
     if (!exists){
-      data.education.push(parsedData);
+      data.addEducation(parsedData);
       setData(data);
-      console.log(data);
+    }
+    // update if exists
+    else if(exists){
+      data.updateEducation(parsedData);
+      setData(data);
     }
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit}>
+    <form key={id} ref={formRef} onSubmit={handleSubmit}>
       <fieldset
         id={id.toString()}
         className="relative flex flex-col gap-2 justify-center border-t border-b rounded-none! py-3 md:border md:p-3 md:rounded!"
       >
         <legend className="text-center">Education {index} </legend>
-        <label htmlFor="id" className="hidden">
+        <label htmlFor="_id" className="hidden">
           id
         </label>
         <input
           type="text"
-          name="id"
+          name="_id"
           className="hidden"
           placeholder="id"
           defaultValue={id.toString() || ""}
@@ -165,11 +174,11 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
             onClick={() => formRef.current?.requestSubmit()}
             className="btn-primary w-fit rounded px-2 py-1"
           >
-            <AddIcon className="text-white" />
+            <Save className="text-white" />
           </button>
           <button
             className="border border-red-500 bg-gray-500/20 w-fit rounded px-2 py-1"
-            onClick={() => onDelete(id)}
+            onClick={(e) => {e.preventDefault(); onDelete(id);}}
           >
             <Delete className="text-red-500" />
           </button>
