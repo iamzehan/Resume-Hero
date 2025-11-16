@@ -159,13 +159,13 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
           defaultValue={id.toString() || ""}
         />
         <label htmlFor="institute">Name of Institute</label>
-        <input type="text" name="institute" placeholder="Institute name" />
+        <input type="text" name="institute" placeholder="Institute name" required/>
 
         <label htmlFor="degree">Degree/Diploma</label>
-        <input type="text" name="degree" placeholder="e.g. Bachelor of Arts" />
+        <input type="text" name="degree" placeholder="e.g. Bachelor of Arts" required/>
 
         <label htmlFor="year">Passing year</label>
-        <input type="text" name="year" placeholder="Passing year" />
+        <input type="text" name="year" placeholder="Passing year" maxLength={4} required/>
         <div className="absolute md:static top-0 w-full flex gap-2 justify-end">
           <button
             type="button"
