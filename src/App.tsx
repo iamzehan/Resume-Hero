@@ -1,15 +1,9 @@
 import "./App.css";
 import Form from "./components/Form";
 import { useState } from "react";
-import {type Data} from './lib/utils'
+import {Data} from './lib/utils'
 function App() {
-  const [data, setData] = useState<Data>({
-    name: "",
-    phone: "",
-    email: "",
-    education: [],
-    job: [],
-  });
+  const [data, setData] = useState(new Data);
   function handleDataState(newData: Data) {
     setData(newData);
   }

@@ -1,7 +1,7 @@
 import Educations from "./education";
 import Personal from "./personal";
 import Jobs from "./jobs";
-import { type Data } from "../../lib/utils";
+import { Data } from "../../lib/utils";
 export default function Form({
   data,
   setData,
@@ -11,9 +11,9 @@ export default function Form({
 }) {
   return (
     <div className="flex flex-col justify-center items-center">
-        <Personal data={data} onSet={setData}/>
-        <Educations data={data} onSet={setData}/>
-        <Jobs data={data} onSet={setData} />
+        <Personal data={data} setData={setData}/>
+        <Educations data={data} setData={setData}/>
+        <Jobs data={data} setData={setData} />
         <div className="flex w-full md:justify-end">
           {/* <input
             type="submit"
