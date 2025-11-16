@@ -19,7 +19,6 @@ export default function Personal({
       rawData.email as string
     )
     setData(data);
-    console.log(JSON.stringify(data, null, 2));
   }
 
   return (
