@@ -8,10 +8,10 @@ function getID() {
 
 export default function Jobs({
   data,
-  onSet,
+  setData,
 }: {
   data: Data;
-  onSet:(data:Data) => void;
+  setData:(data:Data) => void;
 }) {
   const [items, setItems] = useState<string[]>([]);
 
