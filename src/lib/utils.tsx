@@ -67,7 +67,13 @@ export class Data implements DataItem {
   public addEducation(education:EducationItem){
     this.educations.push(education);
   }
-  public deleteEducation(id:string){
+
+  public updateEducation(education:EducationItem):void{
+    const index = this.educations.findIndex(item => item.id===education.id);
+    this.educations[index] = education;
+  }
+
+  public deleteEducation(id:string): void{
     this.educations = this.educations.filter((item)=> item.id!==id)
   }
   public addJob(job:JobItem){
