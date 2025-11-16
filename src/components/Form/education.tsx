@@ -25,7 +25,6 @@ export default function Educations({
     setItems((prev) => prev.filter((item) => item !== id));
     // Setting the data after delete
     data.deleteEducation(id)
-    console.log(data);
     setData(data);
   };
   return (
