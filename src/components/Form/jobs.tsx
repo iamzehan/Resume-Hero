@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import clsx from "clsx";
-import { Add as AddIcon, Delete } from "@mui/icons-material";
-import { type Data, type Job as JobItem } from "../../lib/utils";
+import { Add as AddIcon, Save, Delete } from "@mui/icons-material";
+import { Data, Job as JobData } from "../../lib/utils";
 function getID() {
   return self.crypto.randomUUID();
 }
@@ -11,7 +11,7 @@ export default function Jobs({
   setData,
 }: {
   data: Data;
-  setData:(data:Data) => void;
+  setData: (data: Data) => void;
 }) {
   const [items, setItems] = useState<string[]>([]);
 
@@ -21,14 +21,15 @@ export default function Jobs({
   };
 
   const handleDelete = (id: string) => {
-    // set view
+    // Setting the view after delete
     setItems((prev) => prev.filter((item) => item !== id));
-    
-    // set data
+
+    // Setting the data after delete
     data.deleteJob(id);
     setData(data);
+    console.log(JSON.stringify(data, null, 4));
   };
-  
+
   return (
     <>
       <fieldset className="flex flex-col items-center gap-2 w-[90%]">
@@ -68,6 +69,8 @@ export default function Jobs({
           <Job
             key={id}
             id={id}
+            data={data}
+            setData={setData}
             index={(idx + 1).toString()}
             onDelete={handleDelete}
           />
@@ -109,42 +112,91 @@ function Add({
 interface JobProps {
   id: string;
   index: string;
+  data: Data;
   onDelete: (id: string) => void;
+  setData: (data: Data) => void;
 }
 
-function Job({ id, index, onDelete }: JobProps) {
+function Job({ id, index, data, onDelete, setData }: JobProps) {
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // handling form submit
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const rawData = Object.fromEntries(formData?.entries());
+    const parsedData = new JobData(
+      rawData._id as string,
+      rawData.organization as string,
+      rawData.title as string,
+      rawData.from as string,
+      rawData.to as string
+    );
+
+    const exists = data.jobs.find((val) => val.id === parsedData.id);
+    // add new education
+    if (!exists) {
+      data.addJob(parsedData);
+      setData(data);
+      console.log(JSON.stringify(data, null, 4));
+    }
+    // update if exists
+    else if (exists) {
+      data.updateJob(parsedData);
+      setData(data);
+      console.log(JSON.stringify(data, null, 4));
+    }
+  }
   return (
-    <form>
+    <form key={id} ref={formRef} onSubmit={handleSubmit}>
       <fieldset
         id={id.toString()}
         className="relative flex flex-col gap-2 justify-center border-t border-b rounded-none! py-3 md:border md:p-3 md:rounded!"
       >
         <legend className="text-center">Experience {index} </legend>
-
-        <label htmlFor="Organization">Name of Organization</label>
+        <label htmlFor="_id" className="hidden">
+          id
+        </label>
         <input
           type="text"
-          name="Organization"
+          name="_id"
+          className="hidden"
+          placeholder="id"
+          defaultValue={id.toString() || ""}
+        />
+
+        <label htmlFor="organization">Name of Organization</label>
+        <input
+          type="text"
+          name="organization"
           placeholder="Organization name"
         />
 
-        <label htmlFor="degree">Title/Designation</label>
-        <input type="text" name="degree" placeholder="e.g. Junior Sales Rep." />
+        <label htmlFor="title">Title/Designation</label>
+        <input type="text" name="title" placeholder="e.g. Junior Sales Rep." />
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="flex flex-col flex-1">
-            <label htmlFor="year">From</label>
-            <input type="text" name="year" placeholder="Started at" />
+            <label htmlFor="from">From</label>
+            <input type="text" name="from" placeholder="Started at" />
           </div>
           <div className="flex flex-col flex-1">
-            <label htmlFor="year">To</label>
-            <input type="text" name="year" placeholder="Ended at" />
+            <label htmlFor="to">To</label>
+            <input type="text" name="to" placeholder="Ended at" />
           </div>
         </div>
 
-        <div className="absolute md:static top-0 w-full flex justify-end">
+        <div className="absolute md:static top-0 w-full flex justify-end gap-2">
+          <button
+            type="button"
+            formMethod="POST"
+            onClick={() => formRef.current?.requestSubmit()}
+            className="btn-primary w-fit rounded px-2 py-1"
+          >
+            <Save className="text-white" />
+          </button>
           <button
             className="border border-red-500 bg-gray-500/20 w-fit rounded px-2 py-1"
-            onClick={() => onDelete(id)}
+            onClick={(e) => {e.preventDefault(); onDelete(id);}}
           >
             <Delete className="text-red-500" />
           </button>
