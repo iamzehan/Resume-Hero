@@ -31,7 +31,7 @@ export default function Navigation({setPath}:{setPath:(path:string)=> void}) {
     <div
       className="
       flex flex-row w-full md:w-screen justify-center items-center shadow 
-      fixed top-0 left-0 dark:bg-zinc-950/30 backdrop-blur-2xl
+      fixed top-0 left-0 dark:bg-zinc-950/30 backdrop-blur-2xl z-100
     "
     >
       <nav className="relative bg-transparent">
