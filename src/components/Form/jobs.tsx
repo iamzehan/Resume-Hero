@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef} from "react";
 import clsx from "clsx";
 import { Add as AddIcon, Save, Delete } from "@mui/icons-material";
 import { Data, Job as JobData } from "../../lib/utils";
