@@ -1,9 +1,12 @@
 import "./App.css";
+
+import Navigation from "./components/Navigation";
 import Form from "./components/Form";
+
 import { useState } from "react";
-import {Data} from './lib/utils'
+import { Data } from "./lib/utils";
 function App() {
-  const [data, setData] = useState(new Data);
+  const [data, setData] = useState(new Data());
   function handleDataState(newData: Data) {
     setData(newData);
   }
@@ -13,9 +16,9 @@ function App() {
     flex flex-col items-center
     w-full h-screen"
     >
-      <p className="font-bold text-2xl">Welcome to CV Maker</p>
-      <div className="content flex md:justify-center">
-        {/* layout Controller(Preview/Edit) */}
+      <Navigation />
+
+      <div className="content flex md:justify-center mt-10">
         <Form data={data} setData={handleDataState} />
         {/* View */}
       </div>
