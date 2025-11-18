@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { Add as AddIcon, Save, Delete } from "@mui/icons-material";
 import { Data, Education as Edu } from "../../lib/utils";
@@ -14,22 +14,36 @@ export default function Educations({
   setData: (data: Data) => void;
 }) {
   const [items, setItems] = useState<string[]>([]);
-
+  const added = items.length > 0;
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setItems((prev) => [...prev, getID()]); // unique ID
   };
 
+  // When new Item is added scroll to bottom
+  const containerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (added) {
+      containerRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    }
+  }, [items, added]);
+
   const handleDelete = (id: string) => {
     // Setting the view after delete
     setItems((prev) => prev.filter((item) => item !== id));
     // Setting the data after delete
-    data.deleteEducation(id)
+    data.deleteEducation(id);
     setData(data);
   };
   return (
     <>
-      <div className="flex flex-col gap-2 items-center w-[90%] mb-20">
+      <div
+        ref={containerRef}
+        className="flex flex-col gap-2 items-center w-[90%] mb-20"
+      >
         <legend
           className={clsx(
             "text-center font-semibold text-3xl! md:block",
@@ -123,19 +137,21 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const rawData = Object.fromEntries(formData?.entries());
-    const parsedData = new Edu(rawData._id as string, 
-      rawData.institute as string, 
-      rawData.degree as string, 
-      rawData.year as string);
-    
-    const exists = data.educations.find(val => val.id===parsedData.id);
+    const parsedData = new Edu(
+      rawData._id as string,
+      rawData.institute as string,
+      rawData.degree as string,
+      rawData.year as string
+    );
+
+    const exists = data.educations.find((val) => val.id === parsedData.id);
     // add new education
-    if (!exists){
+    if (!exists) {
       data.addEducation(parsedData);
       setData(data);
     }
     // update if exists
-    else if(exists){
+    else if (exists) {
       data.updateEducation(parsedData);
       setData(data);
     }
@@ -159,13 +175,29 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
           defaultValue={id.toString() || ""}
         />
         <label htmlFor="institute">Name of Institute</label>
-        <input type="text" name="institute" placeholder="Institute name" required/>
+        <input
+          type="text"
+          name="institute"
+          placeholder="Institute name"
+          required
+        />
 
         <label htmlFor="degree">Degree/Diploma</label>
-        <input type="text" name="degree" placeholder="e.g. Bachelor of Arts" required/>
+        <input
+          type="text"
+          name="degree"
+          placeholder="e.g. Bachelor of Arts"
+          required
+        />
 
         <label htmlFor="year">Passing year</label>
-        <input type="text" name="year" placeholder="Passing year" maxLength={4} required/>
+        <input
+          type="text"
+          name="year"
+          placeholder="Passing year"
+          maxLength={4}
+          required
+        />
         <div className="absolute md:static top-0 w-full flex gap-2 justify-end">
           <button
             type="button"
@@ -177,7 +209,10 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
           </button>
           <button
             className="border border-red-500 bg-gray-500/20 w-fit rounded px-2 py-1"
-            onClick={(e) => {e.preventDefault(); onDelete(id);}}
+            onClick={(e) => {
+              e.preventDefault();
+              onDelete(id);
+            }}
           >
             <Delete className="text-red-500" />
           </button>

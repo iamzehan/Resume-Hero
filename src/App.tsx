@@ -36,7 +36,7 @@ function App() {
     >
       <Navigation setPath={setPath} />
 
-      <div className="content flex justify-center over mt-20">
+      <div className="content flex justify-center over pb-25! mt-3 md:mt-20">
         <section id="Edit" className={clsx({ hidden: path === "Preview" })}>
           <Form data={data} setData={handleDataState} />
         </section>

@@ -1,4 +1,4 @@
-import { useState, useRef} from "react";
+import { useState, useRef, useEffect} from "react";
 import clsx from "clsx";
 import { Add as AddIcon, Save, Delete } from "@mui/icons-material";
 import { Data, Job as JobData } from "../../lib/utils";
@@ -14,11 +14,22 @@ export default function Jobs({
   setData: (data: Data) => void;
 }) {
   const [items, setItems] = useState<string[]>([]);
-
+  const added = (items.length>0)
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setItems((prev) => [...prev, getID()]); // unique ID
   };
+
+  // When new Item is added scroll to bottom
+    const containerRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+    if (added) {
+      containerRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    }
+  }, [items, added]);
 
   const handleDelete = (id: string) => {
     // Setting the view after delete
@@ -31,7 +42,7 @@ export default function Jobs({
 
   return (
     <>
-      <fieldset className="flex flex-col items-center gap-2 w-[90%]">
+    <div ref={containerRef} className="flex flex-col gap-2 items-center w-[90%] mb-20">
         <legend
           className={clsx(
             "text-center font-semibold text-3xl! md:block",
@@ -83,7 +94,7 @@ export default function Jobs({
         >
           <Add onAdd={handleAdd} />
         </div>
-      </fieldset>
+    </div>
     </>
   );
 }
