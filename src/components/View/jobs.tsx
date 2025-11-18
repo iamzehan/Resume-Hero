@@ -17,7 +17,7 @@ export default function Jobs({ data }: { data: JobItem[] }) {
       <p className="text-4xl font-medium mb-5 border-b-2">Experience</p>
       {data?.map((job) => {
         return (
-          <div key={job.id} className="w-[90%] flex flex-col borde">
+          <div key={job.id} className="w-[90%] flex flex-col">
             <div className="flex gap-5 items-baseline">
               <ListStyle />
               <div className="flex flex-col">
