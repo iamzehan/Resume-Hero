@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 import clsx from "clsx";
 import { Add as AddIcon, Save, Delete } from "@mui/icons-material";
 import { Data, Job as JobData } from "../../lib/utils";
@@ -14,15 +14,15 @@ export default function Jobs({
   setData: (data: Data) => void;
 }) {
   const [items, setItems] = useState<string[]>([]);
-  const added = (items.length>0)
+  const added = items.length > 0;
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setItems((prev) => [...prev, getID()]); // unique ID
   };
 
   // When new Item is added scroll to bottom
-    const containerRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
     if (added) {
       containerRef.current?.scrollIntoView({
         behavior: "smooth",
@@ -42,7 +42,10 @@ export default function Jobs({
 
   return (
     <>
-    <div ref={containerRef} className="flex flex-col gap-2 items-center w-[90%] mb-20">
+      <div
+        ref={containerRef}
+        className="flex flex-col gap-2 items-center w-[90%] mb-20"
+      >
         <legend
           className={clsx(
             "text-center font-semibold text-3xl! md:block",
@@ -94,7 +97,7 @@ export default function Jobs({
         >
           <Add onAdd={handleAdd} />
         </div>
-    </div>
+      </div>
     </>
   );
 }
@@ -130,10 +133,10 @@ interface JobProps {
 function Job({ id, index, data, onDelete, setData }: JobProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
-  // handling current Job status with checkbox 
+  // handling current Job status with checkbox
   const [isCurrent, setIsCurrent] = useState(false);
   const handleCurrent = () => {
-    setIsCurrent(!isCurrent); 
+    setIsCurrent(!isCurrent);
   };
 
   // handling form submit
@@ -148,7 +151,7 @@ function Job({ id, index, data, onDelete, setData }: JobProps) {
       rawData.from as string,
       rawData.to as string
     );
-    
+
     const exists = data.jobs.find((val) => val.id === parsedData.id);
     // add new education
     if (!exists) {
@@ -165,7 +168,7 @@ function Job({ id, index, data, onDelete, setData }: JobProps) {
     <form key={id} ref={formRef} onSubmit={handleSubmit}>
       <fieldset
         id={id.toString()}
-        className="relative flex flex-col gap-2 justify-center border-t border-b rounded-none! py-3 md:border md:p-3 md:rounded!"
+        className="relative shadow-sm flex flex-col gap-2 justify-center border-t border-b rounded-none! py-3 md:border md:p-3 md:rounded!"
       >
         <legend className="text-center">Experience {index} </legend>
         <label htmlFor="_id" className="hidden">
@@ -204,9 +207,8 @@ function Job({ id, index, data, onDelete, setData }: JobProps) {
             <input
               type="text"
               name="to"
-              defaultValue={(isCurrent)?"I currently work here":""}
+              defaultValue={isCurrent ? "I currently work here" : ""}
               placeholder="Ended at"
-              
               disabled={isCurrent}
             />
           </div>
@@ -228,17 +230,17 @@ function Job({ id, index, data, onDelete, setData }: JobProps) {
           />
         </label>
 
-        <div className="absolute md:static top-0 w-full flex justify-end gap-2">
+        <div className=" w-full flex gap-2 justify-between md:justify-end">
           <button
             type="button"
             formMethod="POST"
             onClick={() => formRef.current?.requestSubmit()}
-            className="btn-primary w-fit rounded px-2 py-1"
+            className="btn-primary flex-1 md:flex-0 w-fit rounded px-2 py-1"
           >
             <Save className="text-white" />
           </button>
           <button
-            className="border border-red-500 bg-gray-500/20 w-fit rounded px-2 py-1"
+            className="border flex-1 md:flex-0 border-red-500 bg-gray-500/20 w-fit rounded px-2 py-1"
             onClick={(e) => {
               e.preventDefault();
               onDelete(id);

@@ -158,10 +158,10 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
   }
 
   return (
-    <form key={id} ref={formRef} onSubmit={handleSubmit}>
+    <form key={id} ref={formRef} onSubmit={handleSubmit} className="reltive">
       <fieldset
         id={id.toString()}
-        className="relative flex flex-col gap-2 justify-center border-t border-b rounded-none! py-3 md:border md:p-3 md:rounded!"
+        className="relative shadow-sm flex flex-col gap-2 justify-center border-t border-b rounded-none! py-3 md:border md:p-3 md:rounded!"
       >
         <legend className="text-center">Education {index} </legend>
         <label htmlFor="_id" className="hidden">
@@ -198,17 +198,17 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
           maxLength={4}
           required
         />
-        <div className="absolute md:static top-0 w-full flex gap-2 justify-end">
+        <div className=" w-full flex gap-2 justify-between md:justify-end">
           <button
             type="button"
             formMethod="POST"
             onClick={() => formRef.current?.requestSubmit()}
-            className="btn-primary w-fit rounded px-2 py-1"
+            className="btn-primary flex-1 md:flex-0 w-fit rounded px-2 py-1"
           >
             <Save className="text-white" />
           </button>
           <button
-            className="border border-red-500 bg-gray-500/20 w-fit rounded px-2 py-1"
+            className="border flex-1 md:flex-0 border-red-500 bg-gray-500/20 w-fit rounded px-2 py-1"
             onClick={(e) => {
               e.preventDefault();
               onDelete(id);
