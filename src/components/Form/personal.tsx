@@ -23,7 +23,7 @@ export default function Personal({
 
   return (
     <form className="xl:items-center!" ref={formRef} onSubmit={handleSubmit}>
-      <fieldset className="flex flex-col xl:w-[90%]!">
+      <fieldset className="flex flex-col shadow-sm xl:w-[90%]!">
         <legend className="text-center font-semibold! text-3xl! mb-5">
           Personal Information
         </legend>
