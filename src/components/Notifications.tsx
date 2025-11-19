@@ -52,7 +52,7 @@ export default function Notifications({
           "shadow",
           "transition-transform origin-top ease-in-out duration-500",
           { "-translate-y-full": !visible, "translate-y-0": visible },
-          "md:w-fit md:top-[20%] md:right-0 md:transform-none rounded-r-none!",
+          "md:w-fit md:top-[20%] md:right-0 md:transform-none md:rounded-r-none!",
           {"md:translate-x-full":!visible,
             "md:-translate-y-full":visible
            }
