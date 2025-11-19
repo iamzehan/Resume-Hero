@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, lazy} from "react";
 import clsx from "clsx";
 import Add from "../Add";
-import { Add as AddIcon } from "@mui/icons-material";
+import NothingAdded from "../NothingAdded";
 import { Data } from "../../../lib/utils";
 
 const Education = lazy(()=>import('./EducationEditMode'));
@@ -58,29 +58,9 @@ export default function Educations({
         >
           Education
         </legend>
-        <div
-          className={clsx(
-            [
-              "w-[90%] xl:w-[50%] flex gap-2 justify-center items-center text-center my-3 py-15 border-2 rounded-xl border-dashed text-xl text-gray-500/40",
-            ],
-            {
-              ["hidden"]: items.length > 0,
-            }
-          )}
-        >
-          <div className="flex flex-col md:flex-row gap-2 items-center font-semibold">
-            <p> Nothing added yet </p>
-            <button
-              className="text-2xl flex w-fit border border-blue-500 animate-pulse justify-center"
-              onClick={handleAdd}
-            >
-              <AddIcon
-                fontSize="large"
-                className="text-blue-500 animate-pulse"
-              />
-            </button>
-          </div>
-        </div>
+<>
+        {(items.length===0)?<NothingAdded handleAdd={handleAdd}/>:null}
+        </>
         {items?.map((id, idx) => (
           <>
             <Education
