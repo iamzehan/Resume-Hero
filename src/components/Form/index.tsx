@@ -1,4 +1,4 @@
-import Educations from "./education";
+import Educations from "./Education";
 import Personal from "./personal";
 import Jobs from "./jobs";
 import { Data } from "../../lib/utils";
