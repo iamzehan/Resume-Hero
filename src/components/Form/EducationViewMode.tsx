@@ -1,24 +1,17 @@
 import type { EducationItem } from "../../lib/utils";
-import clsx from "clsx";
 import { EditSquare } from "@mui/icons-material";
 import { Suspense } from "react";
 export default function EducationViewMode({
   data,
-  viewMode,
   setViewMode,
 }: {
   data: EducationItem | null;
-  viewMode: boolean;
   setViewMode: (T: boolean) => void;
 }) {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<p className="w-full text-center">Loading...</p>}>
     <div
-      className={clsx(
-        ["flex items-center px-2 w-full shadow shadow-gray-500/20 rounded"],
-        { block: viewMode },
-        { hidden: !viewMode }
-      )}
+      className="flex items-center px-2 w-full shadow shadow-gray-500/20 rounded"
     >
       <div className="flex flex-col w-full p-2">
         <p className="md:text-3xl font-bold text-blue-500">

@@ -90,14 +90,18 @@ export default function Educations({
             data={data}
           />
         ))}
+        
+        {/* Adde new items */}
         <div
           className={clsx(
-            ["w-full flex justify-center"],
+            ["w-full flex justify-center items-center"],
             { hidden: items.length == 0 },
             { block: items.length > 0 }
           )}
         >
+          <span className="h-1 w-full bg-gray-500/20 rounded text-gray-500"></span>
           <Add onAdd={handleAdd} />
+          <span className="h-1 w-full bg-gray-500/20 rounded"></span>
         </div>
       </div>
     </>
@@ -112,10 +116,10 @@ function Add({
   return (
     <>
       <button
-        id="AddJobs"
+        id="addEducation"
         onClick={onAdd}
         className="
-            p-2 bg-blue-500! text-white
+            md:p-2 bg-blue-500! text-white
             rounded-full
           "
       >
@@ -165,12 +169,14 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
       setData(data);
     }
   }
+  if(viewMode){
+    return <EducationViewMode data={viewData} setViewMode={setViewMode} />
+  }
 
   return (
     <>
-      <EducationViewMode data={viewData} viewMode={viewMode} setViewMode={setViewMode} />
       <form key={id} ref={formRef} onSubmit={handleSubmit}
-      className={clsx(["relative"], {"hidden!":viewMode}, {"block!":!viewMode})}>
+      className="relative">
         <fieldset
           id={id.toString()}
           className="relative shadow-sm flex flex-col gap-2 justify-center border-t border-b rounded-none! py-3 md:border md:p-3 md:rounded!"
