@@ -88,14 +88,17 @@ export default function Jobs({
             onDelete={handleDelete}
           />
         ))}
+        {/* Adde new items */}
         <div
           className={clsx(
-            ["w-full flex justify-center"],
-            { ["hidden"]: items.length == 0 },
-            { ["block"]: items.length > 0 }
+            ["w-full flex justify-center items-center"],
+            { hidden: items.length == 0 },
+            { block: items.length > 0 }
           )}
         >
+          <span className="h-1 w-full bg-gray-500/20 rounded text-gray-500"></span>
           <Add onAdd={handleAdd} />
+          <span className="h-1 w-full bg-gray-500/20 rounded"></span>
         </div>
       </div>
     </>
@@ -112,7 +115,7 @@ function Add({
       <button
         onClick={onAdd}
         className="
-            p-2 bg-blue-500! text-white
+            md:p-2 bg-blue-500! text-white
             rounded-full
           "
       >
