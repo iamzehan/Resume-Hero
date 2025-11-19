@@ -1,6 +1,6 @@
 import Educations from "./Education";
 import Personal from "./personal";
-import Jobs from "./jobs";
+import Jobs from "./Jobs";
 import { Data } from "../../lib/utils";
 export default function Form({
   data,
