@@ -1,3 +1,5 @@
+*Note:If you're here from `The Odin Project` community, I'd like to say that this project uses Tailwind for CSS. It's only been two weeks since I learned it, because I have already mastered the fundamentals and advanced topics of CSS, the leap was extremely easy for me and yes before doing this I have had some run-in with NextJS.* 
+
 # Resume Hero
 
 Fillup the form and get a resume ready instantly. 
