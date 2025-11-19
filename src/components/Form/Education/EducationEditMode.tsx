@@ -1,9 +1,8 @@
 import { Data, Education as Edu, type EducationItem } from "../../../lib/utils";
-import { useRef, useState } from "react";
+import { useRef, useState, lazy, Suspense } from "react";
 import { Save, Delete } from "@mui/icons-material";
 import clsx from "clsx";
-import EducationViewMode from "./EducationViewMode";
-
+const EducationViewMode = lazy(() => import("./EducationViewMode"));
 interface EducationProps {
   id: string;
   index: string;
@@ -20,7 +19,7 @@ export default function Education({
   setData,
 }: EducationProps) {
   const formRef = useRef<HTMLFormElement>(null);
-   // view controller state & data
+  // view controller state & data
   const [viewData, setViewData] = useState<EducationItem | null>(null);
   const [viewMode, setViewMode] = useState(false);
 
@@ -54,7 +53,6 @@ export default function Education({
   }
   return (
     <>
-    
       <div
         className={clsx(
           ["w-full lg:w-[50%] mb-5"],
@@ -62,11 +60,11 @@ export default function Education({
           { block: viewMode }
         )}
       >
-        <EducationViewMode
-          key={viewData?.id}
-          data={viewData}
-          setViewMode={setViewMode}
-        />
+        {viewMode && (
+          <Suspense fallback={<p className="w-full text-center">Loading...</p>}>
+            <EducationViewMode data={viewData} setViewMode={setViewMode} />
+          </Suspense>
+        )}
       </div>
       <div
         className={clsx(
