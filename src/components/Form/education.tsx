@@ -94,7 +94,7 @@ export default function Educations({
         {/* Adde new items */}
         <div
           className={clsx(
-            ["w-full flex justify-center items-center"],
+            ["w-full flex justify-center items-center lg:w-[50%]"],
             { hidden: items.length == 0 },
             { block: items.length > 0 }
           )}
@@ -172,7 +172,7 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
   return (
     <>
       <div
-        className={clsx(["w-full"], { hidden: !viewMode }, { block: viewMode })}
+        className={clsx(["w-full lg:w-[50%] mb-5"], { hidden: !viewMode }, { block: viewMode })}
       >
         <EducationViewMode data={viewData} setViewMode={setViewMode} />
       </div>

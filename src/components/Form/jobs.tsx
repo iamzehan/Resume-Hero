@@ -94,7 +94,7 @@ export default function Jobs({
         {/* Adde new items */}
         <div
           className={clsx(
-            ["w-full flex justify-center items-center"],
+            ["w-full lg:w-[50%] flex justify-center items-center"],
             { hidden: items.length == 0 },
             { block: items.length > 0 }
           )}
@@ -178,7 +178,7 @@ function Job({ id, index, data, onDelete, setData }: JobProps) {
   }
   return (
     <>
-    <div className={clsx(["w-full"], {"hidden":!viewMode},{"block":viewMode})}>
+    <div className={clsx(["w-full lg:w-[50%] mb-5"], {"hidden":!viewMode},{"block":viewMode})}>
     <JobViewMode data={viewData} setViewMode={setViewMode}/>
     </div>
     <form key={id} ref={formRef} onSubmit={handleSubmit}
