@@ -37,7 +37,15 @@ Yes! A lot of room really.
 ---
 
 ### 1. Edit-mode
-![image2](readme-assets/image1.png)
+![image1](readme-assets/image1.png)
 
 ### 2. Preview-mode
 ![image2](readme-assets/image2.png)
+
+### 3. Responsive Designs
+![image3](readme-assets/image3.png)
+![image4](readme-assets/image4.png)
+![image5](readme-assets/image5.png)
+![image6](readme-assets/image6.png)
+![image7](readme-assets/image7.png)
+![image8](readme-assets/image8.png)
