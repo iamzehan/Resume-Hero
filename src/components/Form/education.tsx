@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { Add as AddIcon, Save, Delete } from "@mui/icons-material";
 import { Data, Education as Edu, type EducationItem } from "../../lib/utils";
 
-const EducationViewMode = lazy(() => import('./EducationViewMode'))
+const EducationViewMode = lazy(() => import("./EducationViewMode"));
 
 function getID() {
   return self.crypto.randomUUID();
@@ -90,7 +90,7 @@ export default function Educations({
             data={data}
           />
         ))}
-        
+
         {/* Adde new items */}
         <div
           className={clsx(
@@ -169,14 +169,19 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
       setData(data);
     }
   }
-  if(viewMode){
-    return <EducationViewMode data={viewData} setViewMode={setViewMode} />
-  }
-
   return (
     <>
-      <form key={id} ref={formRef} onSubmit={handleSubmit}
-      className="relative">
+      <div
+        className={clsx(["w-full"], { hidden: !viewMode }, { block: viewMode })}
+      >
+        <EducationViewMode data={viewData} setViewMode={setViewMode} />
+      </div>
+      <form
+        key={id}
+        ref={formRef}
+        onSubmit={handleSubmit}
+        className={clsx({ "hidden!": viewMode }, { "block!": viewMode })}
+      >
         <fieldset
           id={id.toString()}
           className="relative shadow-sm flex flex-col gap-2 justify-center border-t border-b rounded-none! py-3 md:border md:p-3 md:rounded!"
@@ -241,5 +246,3 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
     </>
   );
 }
-
-

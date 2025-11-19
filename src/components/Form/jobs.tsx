@@ -1,7 +1,10 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, lazy } from "react";
 import clsx from "clsx";
 import { Add as AddIcon, Save, Delete } from "@mui/icons-material";
-import { Data, Job as JobData } from "../../lib/utils";
+import { Data, Job as JobData, type JobItem } from "../../lib/utils";
+
+const JobViewMode = lazy(()=> import('./JobsViewMode'));
+
 function getID() {
   return self.crypto.randomUUID();
 }
@@ -135,6 +138,9 @@ interface JobProps {
 
 function Job({ id, index, data, onDelete, setData }: JobProps) {
   const formRef = useRef<HTMLFormElement>(null);
+  const [viewMode, setViewMode] = useState(false);
+
+  const [viewData, setViewData] = useState<JobItem | null>(null);
 
   // handling current Job status with checkbox
   const [isCurrent, setIsCurrent] = useState(false);
@@ -154,6 +160,9 @@ function Job({ id, index, data, onDelete, setData }: JobProps) {
       rawData.from as string,
       rawData.to as string
     );
+    // set View Data and View Mode
+    setViewData(parsedData);
+    setViewMode(true);
 
     const exists = data.jobs.find((val) => val.id === parsedData.id);
     // add new education
@@ -168,7 +177,13 @@ function Job({ id, index, data, onDelete, setData }: JobProps) {
     }
   }
   return (
-    <form key={id} ref={formRef} onSubmit={handleSubmit}>
+    <>
+    <div className={clsx(["w-full"], {"hidden":!viewMode},{"block":viewMode})}>
+    <JobViewMode data={viewData} setViewMode={setViewMode}/>
+    </div>
+    <form key={id} ref={formRef} onSubmit={handleSubmit}
+    className={clsx({"hidden!":viewMode}, {"block!":viewMode})}
+    >
       <fieldset
         id={id.toString()}
         className="relative shadow-sm flex flex-col gap-2 justify-center border-t border-b rounded-none! py-3 md:border md:p-3 md:rounded!"
@@ -254,5 +269,6 @@ function Job({ id, index, data, onDelete, setData }: JobProps) {
         </div>
       </fieldset>
     </form>
+    </>
   );
 }
