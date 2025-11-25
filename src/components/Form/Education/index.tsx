@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState, lazy} from "react";
+import { useEffect, useRef, useState} from "react";
 import clsx from "clsx";
 import Add from "../Add";
 import NothingAdded from "../NothingAdded";
 import { Data } from "../../../lib/utils";
-
-const Education = lazy(()=>import('./EducationEditMode'));
+import Education from "./EducationEditMode";
 
 function getID() {
   return self.crypto.randomUUID();
@@ -65,7 +64,6 @@ export default function Educations({
         {(items.length===0)?<NothingAdded handleAdd={handleAdd}/>:null}
         </>
         {items?.map((id, idx) => (
-          <>
             <Education
               key={id}
               id={id}
@@ -75,7 +73,6 @@ export default function Educations({
               setData={setData}
               setNotification={setNotification}
             />
-          </>
         ))}
 
         {/* Adde new items */}

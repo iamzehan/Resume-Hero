@@ -9,7 +9,7 @@ interface EducationProps {
   data: Data;
   onDelete: (id: string) => void;
   setData: (data: Data) => void;
-  setNotification: (notification:string) => void;
+  setNotification: (notification: string) => void;
 }
 
 export default function Education({
@@ -18,7 +18,7 @@ export default function Education({
   data,
   onDelete,
   setData,
-  setNotification
+  setNotification,
 }: EducationProps) {
   const formRef = useRef<HTMLFormElement>(null);
   // view controller state & data
@@ -46,47 +46,29 @@ export default function Education({
     if (!exists) {
       data.addEducation(parsedData);
       setData(data);
-      setNotification('add');
+      setNotification("add");
     }
     // update if exists
     else if (exists) {
       data.updateEducation(parsedData);
       setData(data);
-      setNotification('update');
+      setNotification("update");
     }
   }
   return (
     <>
-      <div
-        className={clsx(
-          ["w-full lg:w-[50%] mb-5"],
-          { hidden: !viewMode },
-          { block: viewMode }
-        )}
-      >
+      <div className={clsx(["w-full lg:w-[50%] mb-5"])}>
         {viewMode && (
           <Suspense fallback={<p className="w-full text-center">Loading...</p>}>
             <EducationViewMode data={viewData} setViewMode={setViewMode} />
           </Suspense>
         )}
       </div>
-      <div
-        className={clsx(
-          ["w-full lg:w-[50%] mb-5"],
-          { hidden: !viewMode },
-          { block: viewMode }
-        )}
-      ></div>
-
       <form
         key={id}
         ref={formRef}
         onSubmit={handleSubmit}
-        className={clsx(
-          ["transition-all duration-600 delay-100 origin-top"],
-          { "hidden!": viewMode },
-          { "block!": !viewMode }
-        )}
+        className={clsx({ "hidden!": viewMode }, { "block!": viewMode })}
       >
         <fieldset
           id={id.toString()}
