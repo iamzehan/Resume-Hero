@@ -29,6 +29,8 @@ function App() {
   jobs: [],
 };
 
+  const year = new Date().getFullYear();
+
   return (
     <main
       className="
@@ -46,6 +48,9 @@ function App() {
           <View data={viewData} />
         </section>
       </div>
+      <footer className="text-balance pb-25 md:pb-10 w-full text-center"> 
+        Copyright © 2025 | <a rel="noopener" className="font-bold text-blue-500" href="https://github.com/iamzehan" target="_blank">Md Ziaul Karim</a>
+      </footer>
     </main>
   );
 }
